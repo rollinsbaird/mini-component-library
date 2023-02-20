@@ -27,20 +27,25 @@ const SIZES = {
 };
 
 const ProgressBar = ({ value, size }) => {
-
-  let progress = "--progress": value + "px";
   let styles = SIZES[size];
-  // let calc = round(value/370);
   return (
-    <Wrapper role="progressbar" aria-label="progresslabel" style={styles}>
-      <Slider value={value}></Slider>
+    <Wrapper
+      role="progressbar"
+      aria-valuenow={value}
+      aria-valuemin="0"
+      aria-valuemax="100"
+      style={styles}>
+      <VisuallyHidden>{value}%</VisuallyHidden>
+      <SliderWrapper>
+        <Slider style={{ "--width": value + "%" }}></Slider>
+      </SliderWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   background-color: ${COLORS.transparentGray15};
-  box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};;
+  box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};
   position: absolute;
   width: 370px;
   height: var(--height);
@@ -49,13 +54,16 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
+const SliderWrapper = styled.div`
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
 const Slider = styled.div`
   background-color: ${COLORS.primary};
-  position: absolute;
-  margin-left: 0;
+  border-radius: 4px 0 0 4px;
   height: var(--sliderHeight);
-  border-radius: var(--padding) 0 0 4px;
-  width: calc(var(--value)/100*370px);
+  width: var(--width);
 `;
 
 export default ProgressBar;
