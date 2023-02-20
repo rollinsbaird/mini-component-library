@@ -8,23 +8,29 @@ import VisuallyHidden from "../VisuallyHidden";
 const SIZES = {
   small: {
     "--height": 8 + "px",
+    "--sliderHeight": 8 + "px",
     "--cornerRadius": 4 + "px",
-    padding: 0,
+    "--padding": 0,
   },
   medium: {
     "--height": 12 + "px",
+    "--sliderHeight": 12 + "px",
     "--cornerRadius": 4 + "px",
-    padding: 0,
+    "--padding": 0,
   },
   large: {
     "--height": 24 + "px",
+    "--sliderHeight": 16 + "px",
     "--cornerRadius": 8 + "px",
-    padding: 4 + "px",
+    "--padding": 4 + "px",
   },
 };
 
 const ProgressBar = ({ value, size }) => {
+
+  let progress = "--progress": value + "px";
   let styles = SIZES[size];
+  // let calc = round(value/370);
   return (
     <Wrapper role="progressbar" aria-label="progresslabel" style={styles}>
       <Slider value={value}></Slider>
@@ -40,12 +46,16 @@ const Wrapper = styled.div`
   height: var(--height);
   border-radius: var(--cornerRadius);
   padding: var(--padding);
+  overflow: hidden;
 `;
 
 const Slider = styled.div`
+  background-color: ${COLORS.primary};
+  position: absolute;
   margin-left: 0;
-  height: var(--height);
-  width: 50%;
+  height: var(--sliderHeight);
+  border-radius: var(--padding) 0 0 4px;
+  width: calc(var(--value)/100*370px);
 `;
 
 export default ProgressBar;
